@@ -11,8 +11,8 @@ computer board
 tally of ships hit
 """
 
-board_size = int(input("Please enter board size:"))
-num_ships = int(input("Please enter number of boats:"))
+board_size = int(input("Please enter board size:\n"))
+num_ships = int(input("Please enter number of boats:\n"))
 user_board = [["."] * board_size for x in range(board_size)]
 computer_board = [["."] * board_size for x in range(board_size)]
 hidden_board = [["."] * board_size for x in range(board_size)]
@@ -30,24 +30,24 @@ def welcomeMessage():
     print("------------------------------------")
 
 def getName():
-    name = str(input("Please enter your name: "))
+    name = str(input("Please enter your name: \n"))
     return name
 
 
 def guesses(board_size):
-    user_guess_row = str(input("Guess a row: "))
-    user_guess_column = str(input("Guess a column: "))
+    user_guess_row = str(input("Guess a row: \n"))
+    user_guess_column = str(input("Guess a column: \n"))
     int_user_guess_row = int(user_guess_row)
     int_user_guess_column = int(user_guess_column)
     computer_guess_row = randint(0,board_size-1)
     computer_guess_column = randint(0,board_size-1)
     while int_user_guess_row > board_size-1:
         print("Invalid row input, try again")
-        user_guess_row = str(input("Guess a row: "))
+        user_guess_row = str(input("Guess a row: \n"))
         int_user_guess_row = int(user_guess_row)
     while int_user_guess_column > board_size-1:
         print("Invalid column input, try again")
-        user_guess_column = str(input("Guess a column: "))
+        user_guess_column = str(input("Guess a column: \n"))
         int_user_guess_column = int(user_guess_column)
 
     return user_guess_row, user_guess_column, computer_guess_row, computer_guess_column
