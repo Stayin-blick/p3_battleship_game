@@ -61,4 +61,6 @@ def count_ships_hit(board):
     return (count)
 
 
-
+welcomeMessage()
+name = getName()
+print(name + "'s Board:")
