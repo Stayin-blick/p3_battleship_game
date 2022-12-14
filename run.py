@@ -1,101 +1,64 @@
 from random import randint
-scores = {"computer":0, "player":0}
 
-class board:
-    """
-    battleship board, player set board size, player set number of ships,
-    the player name and board type (player board or computer)
-    has methods for adding ships and guessses and prints the board
-    """
-
-    def __init__(self, size, num_ships, name, type):
-        self.size = size
-        self.board = [["." for x in range(size)] for y in range(size)]        
-        self.num_ships = num_ships
-        self.name = name
-        self.type = type
-        self.gueses = []
-        self.ships = []
-    
-    def print(self):
-        for row in self.board:
-            print("_".join(row))
-    
-    def guess (self, x, y):
-        self.gueses.append((x, y))
-        self.board[x][y] = "X"
-
-        if (x, y) in self.ships:
-            self.board[x][y] = "*"
-            return "Hit"
-        else:
-            return "Miss"
-
-    def add_ship(self, x, y, type="computer"):
-        if len(self.ships) >= self.num_ships:
-            print("Error you cannot add any more ships")
-        else:
-            self.ships.append((x, y))
-            if self.type == "player":
-                self.board [x] [y] = "@"
-    
-
-def random_point (size):
-    """
-    helper function to return integer between 0 and size
-    """
-    return randint(0, size - 1)
+# X represents missed shot
+# - represents hit shot
 
 """
-def valid_coordinates(x, y, board): 
-    makes sure guesses are in the scope and not repeated
-    try:
-
+setting up the game
+board size
+user board
+computer board
+tally of ships hit
 """
 
-def populate_board(board):
-    print(_) * {size}
+board_size = int(input("Please enter board size:"))
+num_ships = int(input("Please enter number of boats:"))
+user_board = [["."] * board_size for x in range(board_size)]
+computer_board = [["."] * board_size for x in range(board_size)]
+hidden_board = [["."] * board_size for x in range(board_size)]
 
-"""
-
-def play_game(computer_board, player board):
-    computer random row random column (random_point())
-    player input column input row
-    computer_board 
-"""
-
-def new_game():
-    """
-    starts a new game. sets the board size and number of ship, resets the
-    scores and initailises the boards.
-    """
-
-    try:
-        size = int(input("choose your board size: "))
-    except ValueError():
-        print("input must be a number")
-    try:
-        num_ships = int(input("how many ships would you like to play with: "))
-    except ValueError():
-        print("input must be a number")
-    scores ["computer"] = 0 
-    scores ["player"] = 0
-    print ("-" * 35)
-    print ("welcome to ultimate battleships")
-    print (f"board size:{size}. number of ships:{num_ships}")
-    print ("top left corner is row 0, column 0")
-    print ("-" * 35)
-    player_name = input("please enter your name: \n")
-    print ("-" * 35)
-
-    computer_board = board(size, num_ships, "computer", type = "computer")
-    player_board = board(size, num_ships, player_name, type = "player")
-
-    for _ in range(num_ships):
-        populate_board (player_board)
-        populate_board (computer_board)
-    
-    play_game (computer_board, player_board)
+def display_board(board):
+    for row in board:
+        print (" ".join(row))
 
 
-new_game()
+def welcomeMessage():
+    print("----------------------------------")
+    print("Welcome to ULTIMATE BATTLESHIPS!!")
+    print("Board Size: ",board_size,"Number of ships :",num_ships)
+    print("Top left corner is row: 0, col: 0")
+    print("------------------------------------")
+
+def getName():
+    name = str(input("Please enter your name: "))
+    return name
+
+
+def guesses(board_size):
+    user_guess_row = str(input("Guess a row: "))
+    user_guess_column = str(input("Guess a column: "))
+    int_user_guess_row = int(user_guess_row)
+    int_user_guess_column = int(user_guess_column)
+    computer_guess_row = randint(0,board_size-1)
+    computer_guess_column = randint(0,board_size-1)
+    while int_user_guess_row > board_size-1:
+        print("Invalid row input, try again")
+        user_guess_row = str(input("Guess a row: "))
+        int_user_guess_row = int(user_guess_row)
+    while int_user_guess_column > board_size-1:
+        print("Invalid column input, try again")
+        user_guess_column = str(input("Guess a column: "))
+        int_user_guess_column = int(user_guess_column)
+
+    return user_guess_row, user_guess_column, computer_guess_row, computer_guess_column
+
+def count_ships_hit(board):
+    count = 0
+    for row in board:
+        for column in row:
+            if column == "-":
+                count += 1
+    return (count)
+
+
+
